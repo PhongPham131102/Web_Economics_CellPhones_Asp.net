@@ -1,0 +1,572 @@
+﻿@{
+    dynamic CTDT = 0;
+    dynamic COLOR = "";
+}
+
+<div class="title1">
+    <div class="background">
+        <div class="col-md-12">
+            <ul class="muc">
+                <li><a href="trangchu.html">Trang Chủ ></a></li>
+                <li><a href="iphone.html">Điện Thoại ></a></li>
+                <li><a href="iphone.html">Iphone ></a></li>
+                <li>@ViewBag.dt.TenDT.Replace(".",@ViewBag.ctdt[0].BoNhoTrong)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="detail">
+    <div class="mainpr">
+        <div class="image">
+            <div class="zone">
+                <img id="anhchuyen" src="~/img/@ViewBag.dt.HangSX/@ViewBag.dt.MaDT/@ViewBag.img[0].MauSac/1.jpg" alt="thaythe" />
+            </div>
+            <div class="image-small">
+                @for (var i = 0; i < @ViewBag.thiscolorthisphone; i++)
+                {
+                    <div class="component">
+                        <img src="~/img/@ViewBag.dt.HangSX/@ViewBag.dt.MaDT/@ViewBag.img[i].MauSac/@(i+1).jpg"
+                         alt="slide" onclick="okkkk();">
+                    </div>
+                    if (i == 4)
+                        break;
+                }
+            </div>
+        </div>
+        <div class="info">
+            <h5 class="title">
+                @ViewBag.dt.TenDT.Replace(".",@ViewBag.ctdt[0].BoNhoTrong)
+            </h5>
+            <div class="price">
+                @foreach (var item in @ViewBag.ctdt)
+                {
+                    if (@item.MauSac == ViewBag.color)
+                        @item.GiaTienBan.ToString("#,##0")
+                } đ
+            </div>
+            <div class="ram">
+                @foreach (var i in @ViewBag.ctdts)
+                {
+                    if (@i.Key.BoNhoTrong == @ViewBag.ctdt[0].BoNhoTrong)
+                    {
+                        int z = 0;
+                        foreach (var j in @ViewBag.colorandrom)
+                        {
+                            if (i.Key.BoNhoTrong == j.Key.BoNhoTrong && @ViewBag.color == j.Key.MauSac)
+                            {
+                                <a asp-action="DienThoai" asp-route-id="@ViewBag.dt.MaDT" asp-route-rom="@j.Key.BoNhoTrong" asp-route-color="@ViewBag.color">
+                                    <div class="ramdetail active">
+                                        <span> @i.Key.BoNhoTrong </span>
+                                        <strong>  @i.Key.GiaTienBan.ToString("#,##0") đ</strong>
+                                    </div>
+                                </a>
+                                z = 1;
+                                break;
+                            }
+
+                        }
+                        if (z == 0)
+                        {
+                            foreach (var j in @ViewBag.colorandrom)
+                            {
+                                if (i.Key.BoNhoTrong == j.Key.BoNhoTrong)
+                                {
+                                    <a asp-action="DienThoai" asp-route-id="@ViewBag.dt.MaDT" asp-route-rom="@i.Key.BoNhoTrong" asp-route-color="@j.Key.MauSac">
+                                        <div class="ramdetail active">
+                                            <span> @i.Key.BoNhoTrong </span>
+                                            <strong>  @i.Key.GiaTienBan.ToString("#,##0") đ</strong>
+                                        </div>
+                                    </a>
+                                    z = 1;
+                                    break;
+                                }
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        int z = 0;
+                        foreach (var j in @ViewBag.colorandrom)
+                        {
+                            if (i.Key.BoNhoTrong == j.Key.BoNhoTrong && @ViewBag.color == j.Key.MauSac)
+                            {
+                                <a asp-action="DienThoai" asp-route-id="@ViewBag.dt.MaDT" asp-route-rom="@i.Key.BoNhoTrong" asp-route-color="@ViewBag.color">
+                                    <div class="ramdetail">
+                                        <span> @i.Key.BoNhoTrong </span>
+                                        <strong>  @i.Key.GiaTienBan.ToString("#,##0") đ</strong>
+                                    </div>
+                                </a>
+                                z = 1;
+                                break;
+                            }
+
+                        }
+                        if (z == 0)
+                        {
+                            foreach (var j in @ViewBag.colorandrom)
+                            {
+                                if (i.Key.BoNhoTrong == j.Key.BoNhoTrong)
+                                {
+                                    <a asp-action="DienThoai" asp-route-id="@ViewBag.dt.MaDT" asp-route-rom="@i.Key.BoNhoTrong" asp-route-color="@j.Key.MauSac">
+                                        <div class="ramdetail">
+                                            <span> @i.Key.BoNhoTrong </span>
+                                            <strong>  @i.Key.GiaTienBan.ToString("#,##0") đ</strong>
+                                        </div>
+                                    </a>
+                                    z = 1;
+                                    break;
+                                }
+
+                            }
+                        }
+                    }
+                }
+            </div>
+            <div class="tag">
+                Chọn màu để xem giá
+            </div>
+            <div class="color">
+                <ul class="list">
+                    @{
+                        string id = "", rom = "", color = "";
+                    }
+                    @foreach (var i in @ViewBag.ctdt)
+                    {
+                        if (i.MauSac == @ViewBag.color)
+                        {
+                            <a asp-action="DienThoai" asp-route-id="@ViewBag.dt.MaDT" asp-route-rom="@i.BoNhoTrong" asp-route-color="@i.MauSac">
+                                @{
+                                    id = ViewBag.dt.MaDT;
+                                    rom = i.BoNhoTrong;
+                                    color = i.MauSac;
+                                }
+                            <li class="detail-color active">
+                                <img src="~/img/@ViewBag.dt.HangSX/@ViewBag.dt.MaDT/@i.MauSac/1.jpg">
+                                <div class="info-detail">
+                                        @{
+                                            CTDT = i.MaCTDT;
+                                            COLOR = i.MauSac;
+                                        }
+                                    <strong> @i.MauSac</strong>
+                                    <br>
+                                    <span>@i.GiaTienBan đ</span>
+                                </div>
+                            </li>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-action="DienThoai" asp-route-id="@ViewBag.dt.MaDT" asp-route-rom="@i.BoNhoTrong" asp-route-color="@i.MauSac">
+                            <li class="detail-color">
+                                <img src="~/img/@ViewBag.dt.HangSX/@ViewBag.dt.MaDT/@i.MauSac/1.jpg">
+                                <div class="info-detail">
+                                    <strong> @i.MauSac</strong>
+                                    <br>
+                                    <span>@i.GiaTienBan đ</span>
+                                </div>
+                            </li>
+                            </a>
+                        }
+                    }
+                </ul>
+            </div>
+            <div class="option">
+                <div class="buynow">
+                    <strong>Mua Ngay</strong>
+                    <div>(Chuyển đến trang thanh toán)</div>
+                </div>
+                <a asp-controller="GioHang" asp-action="Add" asp-route-id="@id" asp-route-rom="@rom" asp-route-color="@color">
+                    <div class="addtocart">
+                        <img src="~/img/cartitem.png">
+                        <div>Thêm Vào Giỏ Hàng</div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+    <div class="support">
+        <div class="priacy">
+            <strong>Thông tin sản phẩm</strong>
+            <svg height="15" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50">
+                <title>
+                    mb
+                </title>
+                <image width="35" height="50" transform="translate(7.5)"
+                       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAyCAYAAADWU2JnAAAABHNCSVQICAgIfAhkiAAAAWRJREFUWEftmcFNw0AQRf+sG6ADoAJCBUAHlJDL7hW7ApIOcrS8PpgKKAHTQaiAlOBcfdhBIxHJRgFpbWT7MHuLtM78efu0hx0CAOfcM4A1gCv5PdVi5oaIamNMluf5gZxzGwASZrbFzHvv/a2E+ZyayLmuQwgPEoZnQ9IvnC0pzHbRYbIQwn6qYzPG7ADcfNfrkxGJyrKspwpjra2J6E7D/CSuZH5zUMkomdj7SZ1RZ9SZWALqTCwxvWfUGXUmloA6E0tM7xl1Rp2JJaDOxBL7855h5hTAZC9XAHZEtDr7WBTb2T/vX/YDY2yzL23bplVVNc65RwCvsX/Q2T+KzLEoiotucWutOPA0MNDwMMz87r2/7xYeOYcYHkZCGGOuZRpyCmStfSOiXsAISluy1h6I6DLio+5WCbIJITTGGBkRiTeD1mmQMfuIB8BHURQrkjbkrJl5PYLQIBoAjsxcJ0mSynF/AXY82KKEipF6AAAAAElFTkSuQmCC">
+                </image>
+            </svg>
+            <p>Mới, đầy đủ phụ kiện từ nhà sản xuất</p>
+            <p>Thân máy, cáp USB-C to Lightning, sách HDSD
+            <p>
+            <p>
+                1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành
+                chính hãng Apple : Điện Thoại Vui ASP (Apple Authorized Service Provider)
+            <p>
+
+        </div>
+        <div class="infosp">
+
+            <strong>Chính sách bán hàng</strong>
+            <p>Sản phẩm được miễn phí giao hàng</p>
+            <p>Miễn phí giao hàng cho đơn hàng từ 800K
+            <p>
+            <p>Cam kết hàng chính hãng 100%
+            <p>
+            <p>Đổi trả trong vòng 10 ngày
+            <p>
+        </div>
+    </div>
+</div>
+<div class="mota">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 s1">
+                @{
+                    int ii = 2;
+                }
+                @foreach (var item in @ViewBag.baiviets)
+                {
+                    @if (ViewBag.dt.MaDT == item.MaDT)
+                    {
+                        String temp = ii.ToString() + ".jpg";
+                        <h4> @item.TieuDe</h4>
+                        <img src="~/img/@ViewBag.dt.HangSX/@ViewBag.dt.MaDT/@temp" alt="giasoc">
+                        <p>@item.NoiDung</p>
+                        ii++;
+                    }
+                }
+
+            </div>
+            <div class="col-md-4 s2">
+                <h4>Thông Số Kỹ Thuật</h4>
+                <div class="s2-1">
+                    <div>Thương Hiệu</div>
+                    <div>@ViewBag.dt.HangSX</div>
+                </div>
+                <div class="s2-2">
+                    <div>Bảo hành</div>
+                    <div>12</div>
+                </div>
+                <div class="s2-1">
+                    <div>Thông tin chung</div>
+                    <div></div>
+                </div>
+                <div class="s2-2">
+                    <div>Tên</div>
+                    <div>@ViewBag.dt.TenDT</div>
+                </div>
+                <div class="s2-1">
+                    <div>Màu sắc</div>
+                    <div>@ViewBag.color</div>
+                </div>
+                <div class="s2-2">
+                    <div>Màn hình</div>
+                    <div></div>
+                </div>
+                <div class="s2-1">
+                    <div>Loại màn hình</div>
+                    <div>@ViewBag.dt.ManHinh</div>
+                </div>
+                <div class="s2-2">
+                    <div>Độ phân giải</div>
+                    <div>2778 x 1284 pixels</div>
+                </div>
+                <div class="s2-1">
+                    <div>Cấu hình</div>
+                    <div></div>
+                </div>
+                <div class="s2-2">
+                    <div>Dung lượng (ROM)</div>
+                    <div>@ViewBag.ctdt[0].BoNhoTrong</div>
+                </div>
+                <div class="s2-1">
+                    <div>Hệ điều hành</div>
+                    <div>@ViewBag.dt.HeDieuHanh</div>
+                </div>
+                <div class="s2-2">
+                    <div>RAM</div>
+                    <div>@ViewBag.dt.Ram</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="good">
+    <span class="bentrai">
+        Sản Phẩm Tương Tự
+    </span>
+</div>
+<div class="rowproduct">
+    @{
+        int sl = 0;
+    }
+    @foreach (var item in @ViewBag.ListIphone)
+    {
+        int i = 0;
+        @foreach (var item2 in @ViewBag.CTDTList)
+        {
+            @foreach (var item3 in @ViewBag.MauSac)
+            {
+
+                if (@item.MaDT == @item2.Key.MaDT && @item3.MaDT == @item.MaDT && @item3.BoNhoTrong == @item2.Key.BoNhoTrong)
+                {
+                    <a asp-action="DienThoai" asp-route-id="@item.MaDT" asp-route-rom="@item2.Key.BoNhoTrong" asp-route-color="@item3.MauSac">
+                        <div class="clmainproduct">
+                            <div class="image"><img src="~/@item.Img" alt="giasoc"></div>
+                            <h5 class="title">@item.TenDT.Replace(".",@item2.Key.BoNhoTrong);</h5>
+                            <div class="some-info">
+                                <span>@item.Ram</span>
+                                <span>@item2.Key.BoNhoTrong</span>
+                            </div>
+                            <div class="price">@item2.Key.GiaTienBan.ToString("#,##0") đ</div>
+                        </div>
+                    </a>
+                    i = 1;
+                    break;
+                }
+
+                if (i == 1)
+                    break;
+            }
+        }
+        sl++;
+        if (sl == 5)
+            break;
+    }
+</div>
+<div class="box-rate">
+    <h2>Đánh giá & nhận xét @ViewBag.dt.TenDT.Replace(".",@ViewBag.ctdt[0].BoNhoTrong+" "+@COLOR)  </h2>
+    <div class="box-rate-detail">
+        <div class="review-score">
+            @{
+                int sosao = 0, sodanhgia = 0, sao5 = 0, sao4 = 0, sao3 = 0, sao2 = 0, sao1 = 0;
+            }
+
+            @foreach (var danhgia in ViewBag.danhgias)
+            {
+                @if (@danhgia.MaCTDT == CTDT)
+                {
+                    sosao += @danhgia.SoSao;
+                    @sodanhgia++;
+                    if (@danhgia.SoSao == 5)
+                    {
+                        sao5++;
+                    }
+                    else if (@danhgia.SoSao == 4)
+                    {
+                        sao4++;
+                    }
+                    else if (@danhgia.SoSao == 3)
+                    {
+                        sao3++;
+                    }
+                    else if (@danhgia.SoSao == 2)
+                    {
+                        sao2++;
+                    }
+                    else if (@danhgia.SoSao == 1)
+                    {
+                        sao1++;
+                    }
+                }
+
+            }
+            @{
+                int avg = 0;
+            }
+            @if (@sodanhgia == 0)
+            {
+                <p class="score">0/5</p>
+            }
+            else
+            {
+                avg = sosao / sodanhgia;
+                <p class="score">@avg/5</p>
+            }
+            <div>
+                @for (int i = 1; i < 6; i++)
+                {
+                    if (i <= avg)
+                    {
+                        <div class="icon is-active">
+                            <svg height="15" xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 576 512">
+                                <path d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z">
+                                </path>
+                            </svg>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="icon">
+                            <svg height="15" xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 576 512">
+                                <path d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z">
+                                </path>
+                            </svg>
+                        </div>
+                    }
+                }
+
+
+            </div>
+            <p><strong>@sodanhgia</strong> đánh giá và nhận xét</p>
+        </div>
+        <div class="review-star">
+            <div class="rating-level">
+                <div class="star-count">
+                    <span class="text">5</span>
+                    <div class="is-active">
+                        <svg height="15" xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 576 512">
+                            <path d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z">
+                            </path>
+                        </svg>
+                    </div>
+                </div> <progress max="@sodanhgia" value="@sao5" class="progress"></progress>
+                <span class="is-size">@sao5 đánh giá</span>
+            </div>
+            <div class="rating-level">
+                <div class="star-count">
+                    <span class="text">4</span>
+                    <div class="is-active">
+                        <svg height="15" xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 576 512">
+                            <path d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z">
+                            </path>
+                        </svg>
+                    </div>
+                </div> <progress max="@sodanhgia" value="@sao4" class="progress"></progress>
+                <span class="is-size">@sao4 đánh giá</span>
+            </div>
+            <div class="rating-level">
+                <div class="star-count">
+                    <span class="text">3</span>
+                    <div class="is-active">
+                        <svg height="15" xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 576 512">
+                            <path d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z">
+                            </path>
+                        </svg>
+                    </div>
+                </div> <progress max="@sodanhgia" value="@sao3" class="progress"></progress>
+                <span class="is-size">@sao3 đánh giá</span>
+            </div>
+            <div class="rating-level">
+                <div class="star-count">
+                    <span class="text">2</span>
+                    <div class="is-active">
+                        <svg height="15" xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 576 512">
+                            <path d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z">
+                            </path>
+                        </svg>
+                    </div>
+                </div> <progress max="@sodanhgia" value="@sao2" class="progress"></progress>
+                <span class="is-size">@sao2 đánh giá</span>
+            </div>
+            <div class="rating-level">
+                <div class="star-count">
+                    <span class="text">1</span>
+                    <div class="is-active">
+                        <svg height="15" xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 576 512">
+                            <path d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z">
+                            </path>
+                        </svg>
+                    </div>
+                </div> <progress max="@sodanhgia" value="@sao1" class="progress"></progress>
+                <span class="is-size">@sao1 đánh giá</span>
+            </div>
+        </div>
+    </div>
+    <div class="rate-comment">
+    </div>
+</div>
+<div class="box-comment">
+    <p>Bình Luận</p>
+    <div class="comment-area">
+<textarea id="content"
+          placeholder="Xin mời để lại câu hỏi, sẽ trả lời lại trong 1h, các câu hỏi sau 22h - 8h sẽ được trả lời vào sáng hôm sau"
+          class="textarea"></textarea>
+        <button id="send" class="button">
+            <div class="icon-paper-plane">
+                <svg height="15" xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 512 512">
+                    <path d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z">
+                    </path>
+                </svg>
+            </div>
+            Gửi
+        </button>
+    </div>
+    <div id="comment">
+        @foreach (var binhluan in ViewBag.binhluans)
+        {
+            @if (@binhluan.MaCTDT == CTDT)
+            {
+                @foreach (var nguoidung in ViewBag.nguoidungs)
+                {
+                    @if (binhluan.MaNguoiDung == nguoidung.MaNguoiDung)
+                    {
+                        <div class="comment">
+                            <div class="info">
+                                <div class="avatar-name">
+                                    <p class="avatar">@nguoidung.HoTen.Substring(0, 1)</p>
+                                    <span class="name">@nguoidung.HoTen </span>
+                                </div>
+                                @*  <p class="date-time">{{ $binhluan->created_at }}</p>*@
+                            </div>
+                            <div class="text-comment">
+                                <div class="rate-star">
+                                    <strong>Nhận xét: </strong>
+                                </div>
+                                <div class="rate-star">
+
+                                    <span>@binhluan.NoiDung</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        }
+    </div>
+    <input id="MaCTDT" type="hidden" value="@CTDT" />
+</div>
+<script>
+            function okkkk() {
+        const imageInfo = {};
+        window.addEventListener('click', function (event) {
+            var currentElement = event.target;
+            console.log(event.target);
+            if (currentElement.tagName === 'IMG') {
+                imageInfo.source = currentElement.getAttribute("src");
+                document.getElementById('anhchuyen').src = imageInfo.source;
+            }
+        });
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $('#send').click(function(event) {
+        var content = document.getElementById('content').value;
+        var ctdt = document.getElementById('MaCTDT').value;
+        $.ajax({
+            url: "/TrangCaNhan/Comment",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                content: content,
+                ctdt: ctdt,
+            },
+            success: function(response) {
+                    }
+                });
+            }
+        })
+    });
+</script>

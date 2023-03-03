@@ -1,0 +1,136 @@
+﻿@{
+    int totalprice = 0;
+    String HoTen = "", SDT = "";
+}
+@foreach (var item in @ViewBag.detailrowproducts)
+{
+    HoTen = item.HoTen;
+    SDT = item.SDT;
+}
+@foreach (var item in ViewBag.detailcart)
+{
+    @foreach (var item2 in ViewBag.quantityphone)
+    {
+        @if (item.MaGioHang == item2.MaGioHang)
+        {
+            @foreach (var item1 in ViewBag.products)
+            {
+                @if (item.MaCTDT == item1.MaCTDT)
+                {
+                    totalprice += item.SL * item1.GiaTienBan;
+                }
+            }
+        }
+    }
+}
+@{
+    String tentinh = "", tenhuyen = "", tenxa = "";
+}
+@foreach (var data in  ViewBag.province)
+{
+    if (ViewBag.address[0].tinh_id == data.Id)
+    {
+        tentinh = data.TenTinh;
+    }
+}
+@foreach (var data in  ViewBag.district)
+{
+    if (ViewBag.address[0].huyen_id == data.Id)
+    {
+        tenhuyen = data.TenHuyen;
+    }
+}
+@foreach (var data in  ViewBag.ward)
+{
+    if (ViewBag.address[0].xa_id == data.Id)
+    {
+        tenxa = data.TenXa;
+    }
+}
+<div class="info-cart">
+    <div class="goback"><a >
+            <svg data-v-ce344fe4="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-left"
+                role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" width="0.625em"
+                class="svg-inline--fa fa-chevron-left">
+                <path data-v-ce344fe4="" fill="currentColor"
+                    d="M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z"
+                    class=""></path>
+            </svg>
+            Trở về</a></div>
+    <p>Xác Nhận Thông Tin</p>
+</div>
+<div class="info-cart1">
+    <div class="status">
+        <div class="component">
+            <div class="icon">
+                <svg data-v-76247bda="" aria-hidden="true" focusable="false" data-prefix="fas"
+                    data-icon="shopping-cart" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
+                    class="icon-svg">
+                    <path data-v-76247bda="" fill="currentColor"
+                        d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z"
+                        class=""></path>
+                </svg>
+            </div>
+            <p class="tick">Chọn sản phẩm</p>
+        </div>
+        <span class="else">-------</span>
+        <div class="component">
+            <div class="icon">
+                <svg data-v-76247bda="" aria-hidden="true" focusable="false" data-prefix="fas"
+                    data-icon="address-card" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
+                    class="icon-svg">
+                    <path data-v-76247bda="" fill="currentColor"
+                        d="M528 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-352 96c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H86.4C74 384 64 375.4 64 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2zM512 312c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-64c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-64c0 4.4-3.6 8-8 8H360c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16z"
+                        class=""></path>
+                </svg>
+            </div>
+            <p class="tick">Thông tin đặt hàng</p>
+        </div>
+        <span class="else">-------</span>
+        <div class="component">
+            <div class="icon">
+                <svg data-v-76247bda="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="box-open"
+                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="icon-svg">
+                    <path data-v-76247bda="" fill="currentColor"
+                        d="M425.7 256c-16.9 0-32.8-9-41.4-23.4L320 126l-64.2 106.6c-8.7 14.5-24.6 23.5-41.5 23.5-4.5 0-9-.6-13.3-1.9L64 215v178c0 14.7 10 27.5 24.2 31l216.2 54.1c10.2 2.5 20.9 2.5 31 0L551.8 424c14.2-3.6 24.2-16.4 24.2-31V215l-137 39.1c-4.3 1.3-8.8 1.9-13.3 1.9zm212.6-112.2L586.8 41c-3.1-6.2-9.8-9.8-16.7-8.9L320 64l91.7 152.1c3.8 6.3 11.4 9.3 18.5 7.3l197.9-56.5c9.9-2.9 14.7-13.9 10.2-23.1zM53.2 41L1.7 143.8c-4.6 9.2.3 20.2 10.1 23l197.9 56.5c7.1 2 14.7-1 18.5-7.3L320 64 69.8 32.1c-6.9-.8-13.5 2.7-16.6 8.9z"
+                        class=""></path>
+                </svg>
+            </div>
+            <p class="tick">Hoàn tất đặt hàng</p>
+        </div>
+    </div>
+</div>
+<div class="infor-customer">
+    <h4 class="text-center">Thông tin đặt hàng</h4>
+    <div class="confirm-info">
+        <p>
+            <span>Người Đặt :</span>
+          @HoTen
+        </p>
+    </div>
+    <div class="confirm-info">
+        <p>
+            <span>Số Điện Thoại :</span>
+          @SDT
+        </p>
+    </div>
+    <div class="confirm-info">
+        <p>
+            <span>Địa Chỉ Nhận Hàng:</span>
+            @ViewBag.address[0].ChiTiet, @tenxa, @tenhuyen, @tentinh 
+        </p>
+    </div>
+    <div class="confirm-info">
+        <p>
+            <span>Tổng Tiền :</span>
+           @totalprice.ToString("#,##0") đ
+        </p>
+    </div>
+</div>
+<div class="status-pay">
+    <a asp-controller="GioHang" asp-action="DatHangThanhCong" >
+    <button class="btn">
+        Xác Nhận Đặt Hàng
+    </button>
+    </a>
+</div>

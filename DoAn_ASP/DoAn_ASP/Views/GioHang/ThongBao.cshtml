@@ -1,0 +1,93 @@
+﻿@{
+    int totalprice = 0;
+    String HoTen = "", SDT = "";
+}
+@foreach (var item in @ViewBag.detailrowproducts)
+{
+    HoTen = item.HoTen;
+    SDT = item.SDT;
+}
+@foreach (var item in ViewBag.detailcart)
+{
+    @foreach (var item2 in ViewBag.quantityphone)
+    {
+        @if (item.MaGioHang == item2.MaGioHang)
+        {
+            @foreach (var item1 in ViewBag.products)
+            {
+                @if (item.MaCTDT == item1.MaCTDT)
+                {
+                    totalprice += item.SL * item1.GiaTienBan;
+                }
+            }
+        }
+    }
+}
+@{
+    String tentinh = "", tenhuyen = "", tenxa = "";
+}
+@foreach (var data in  ViewBag.province)
+{
+    if (ViewBag.address[0].tinh_id == data.Id)
+    {
+        tentinh = data.TenTinh;
+    }
+}
+@foreach (var data in  ViewBag.district)
+{
+    if (ViewBag.address[0].huyen_id == data.Id)
+    {
+        tenhuyen = data.TenHuyen;
+    }
+}
+@foreach (var data in  ViewBag.ward)
+{
+    if (ViewBag.address[0].xa_id == data.Id)
+    {
+        tenxa = data.TenXa;
+    }
+}
+    <div class="infor-customer">
+        <div class="success">
+            <img src="~/img/checked.png" style="height: 50px;width: 50px; margin-left: 230px;
+			margin-bottom: 15px;">
+            <h4 class="text-center">Đặt Hàng Thành Công</h4>
+            <div class="confirm-info">
+                <p>
+                    <span>Người Nhận :</span>
+                    @HoTen
+                </p>
+            </div>
+            <div class="confirm-info">
+                <p>
+                    <span>Số Điện Thoại :</span>
+                     @SDT
+                </p>
+            </div>
+            <div class="confirm-info">
+                <p>
+                    <span>Địa Chỉ Nhận Hàng:</span>
+                  @ViewBag.address[0].ChiTiet, @tenxa, @tenhuyen, @tentinh 
+                </p>
+            </div>
+            <div class="confirm-info">
+                <p>
+                    <span>Hình Thức Thanh Toán :</span>
+                    Thanh toán khi nhận hàng.
+                </p>
+            </div>
+            <div class="confirm-info">
+                <p>
+                    <span>Tổng Tiền :</span>
+                 @ViewBag.total.ToString("#,##0") đ
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="status-pay">
+		<a asp-controller="Home">
+            <button class="btn-success">
+				Quay Về Trang Chủ
+			</button>
+            </a>
+	</div>

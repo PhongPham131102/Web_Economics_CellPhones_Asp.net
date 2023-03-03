@@ -1,0 +1,150 @@
+//tạo thư mục laravel
+composer create-project laravel/laravel example-app
+//chuyển tới thư mục vừa tạo
+cd example-app
+//bắt đầu file laravel
+php artisan serve
+//tạo 1 model có tên Car(như classs trong oops)
+php artisan make:model Car --migration
+//tạo bảng vào database
+php artisan migrate
+//tạo 1 Controller có tên Carcontroller
+php artisan make:controller CarController --resource
+// sau đó tạo 1 thư mục *.php trong file resource/views(nơi chứa code html)
+
+
+
+php artisan make:model loaisanphams --migration
+//loại sản phẩm
+$table->increments('MaLoai');
+$table->string('TenLoai');
+$table->timestamps();
+$table->softDeletes();
+
+php artisan make:model dienthoais --migration
+//điện thoại
+$table->string('MaDT');
+$table->string('TenDT');
+$table->string('ManHinh');
+$table->string('HeDieuHanh');
+$table->string('Ram');
+$table->string('Pin');
+$table->string('Sim');
+$table->string('Chip');
+$table->string('CameraTruoc');
+$table->string('CameraSau');
+$table->string('HangSX');
+$table->unsignedBigInteger('GiaBanChung');
+$table->string('Img');
+$table->integer('MaLoai')->unsigned()->index();
+$table->primary('MaDT');
+$table->timestamps();
+$table->softDeletes();
+$table->foreign('MaLoai')->references('MaLoai')->on('loaisanphams');
+
+php artisan make:model imagedts --migration
+//ảnh điện thoại
+$table->increments('STT');
+$table->string('MaDT');
+$table->string('MauSac');
+$table->string('ImgDT');
+$table->timestamps();
+$table->softDeletes();
+$table->foreign('MaDT')->references('MaDT')->on('dienthoais');
+
+php artisan make:model chitietdienthoais --migration
+//chi tiết điện thoại
+$table->increments('MaCTDT');
+$table->string('MauSac');
+$table->unsignedInteger('GiaTienNhap');
+$table->unsignedInteger('GiaTienBan');
+$table->unsignedInteger('SLTK');
+$table->string('BoNhoTrong');
+$table->string('MaDT');
+$table->timestamps();
+$table->softDeletes();
+$table->foreign('MaDT')->references('MaDT')->on('dienthoais');
+
+php artisan make:model nguoidungs --migration
+//người dùng
+$table->increments('MaNguoiDung');
+$table->string('HoTen');
+$table->string('SDT');
+$table->string('DiaChi');
+$table->string('GioiTinh');
+$table->date('NgaySinh');
+$table->string('Email');
+$table->string('TenDangNhap');
+$table->string('MatKhau');
+$table->boolean('Isadmin');
+$table->timestamps();
+$table->softDeletes();
+
+php artisan make:model hoadonbanhangs --migration
+//hóa đơn bán hàng
+$table->string('MaHoaDon');
+$table->dateTime('NgayLap');
+$table->unsignedInteger('TongTien');
+$table->boolean('TTDonHang');
+$table->integer('MaNguoiDung')->unsigned()->index();
+$table->primary('MaHoaDon');
+$table->timestamps();
+$table->softDeletes();
+$table->foreign('MaNguoiDung')->references('MaNguoiDung')->on('nguoidungs');
+
+php artisan make:model chitiethoadonbans --migration
+//chi tiết hóa đơn bán hàng
+$table->string('MaCTHDBan');
+$table->string('MaHoaDon');
+$table->unsignedInteger('SL');
+$table->unsignedInteger('GiaBan');
+$table->integer('MaCTDT')->unsigned()->index();
+$table->primary('MaCTHDBan');
+$table->timestamps();
+$table->softDeletes();
+$table->foreign('MaHoaDon')->references('MaHoaDon')->on('hoadonbanhangs');
+$table->foreign('MaCTDT')->references('MaCTDT')->on('chitietdienthoais');
+
+php artisan make:model danhgias --migration
+//đánh giá 
+$table->id();
+$table->integer('MaNguoiDung')->unsigned()->index();
+$table->integer('MaCTDT')->unsigned()->index();
+$table->unsignedInteger('SoSao');
+$table->string('NoiDung');
+$table->timestamps();
+$table->softDeletes();
+$table->foreign('MaNguoiDung')->references('MaNguoiDung')->on('nguoidungs');
+$table->foreign('MaCTDT')->references('MaCTDT')->on('chitietdienthoais');
+
+php artisan make:model binhluans --migration
+//bình luận
+$table->id();
+$table->integer('MaNguoiDung')->unsigned()->index();
+$table->integer('MaCTDT')->unsigned()->index();
+$table->string('NoiDung');
+$table->timestamps();
+$table->softDeletes();
+$table->foreign('MaNguoiDung')->references('MaNguoiDung')->on('nguoidungs');
+$table->foreign('MaCTDT')->references('MaCTDT')->on('chitietdienthoais');
+
+php artisan make:model giohangs --migration
+//giỏ hàng
+$table->increments('MaGioHang');
+$table->unsignedInteger('MaNguoiDung');
+$table->timestamps();
+$table->softDeletes();
+$table->foreign('MaNguoiDung')->references('MaNguoiDung')->on('nguoidungs');
+
+php artisan make:model chitietgiohangs --migration
+//chi tiết giỏ hàng
+$table->integer('MachiTietGioHang')->unsigned()->index();
+$table->integer('MaGioHang')->unsigned()->index();
+$table->integer('MaCTDT')->unsigned()->index();
+$table->unsignedInteger('SL');
+$table->timestamps();
+$table->softDeletes();
+$table->foreign('MaGioHang')->references('MaGioHang')->on('giohangs');
+$table->foreign('MaCTDT')->references('MaCTDT')->on('chitietdienthoais');
+
+
